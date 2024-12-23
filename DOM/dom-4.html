@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit and Delete Elements</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <ul class="language">
+    <li>JavaScript</li>
+  </ul>
+</body>
+<script>
+  // creating a function to add li items
+  function addLi(langName) {
+    const li = document.createElement("li");
+    li.innerHTML = langName;
+    const add = document.querySelector(".language");
+    add.appendChild(li);
+  }
+  // this function will work but due to innerHTML code optimality is reduced as it traverses the whole tree to add the li element
+  // for small projects where few elements are needed it's good to use but for large scale projects where data is in large quantity it not optimal
+  addLi("python")
+  addLi("Java")
+
+function optimizedWay(langName){
+  const li = document.createElement("li");
+  li.appendChild(document.createTextNode(langName));
+  // const add = document.querySelector('.language');
+  // add.appendChild(li);
+  // or
+  document.querySelector('li').appendChild(li);
+}
+// optimizedWay('Java')
+
+// EDITING
+let secondLang = document.querySelector('li:nth-child(2)');
+
+const add = secondLang.textContent = "RUST";
+// console.log(secondLang);
+
+const newLi = document.createElement('li');
+newLi.textContent = "c#";
+secondLang.replaceWith(newLi);
+
+const firstLang = document.querySelector("li:first-child");
+firstLang.outerHTML = "<li>RUBY</li>";
+
+// Deleting
+const lastLang = document.querySelector("li:last-child");
+lastLang.remove();
+
+
+</script>
+
+</html>

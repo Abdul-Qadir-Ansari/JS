@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traversing, Looping, Accessing with DOM</title>
+  <style>
+    body{
+      background-color: black;
+      color: white;
+      font-size: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="week">
+    <div class="days">Sunday</div>
+    <div class="days">Monday</div>
+    <div class="days">Tuesday</div>
+    <div class="days">Wednesday</div>
+    <div class="days">Thursday</div>
+    <div class="days">Friday</div>
+    <div class="days">Saturday</div>
+  </div>
+</body>
+<script>
+  const week = document.querySelector(".week");
+  // console.log(week);
+  // console.log(week.children);
+  // this returns an HTML collection
+  // console.log(week.children[0].innerHTMLs);
+  // op: Sunday
+
+  // for-loop
+  // for (let days = 0; days < week.children.length; days++) {
+  //   console.log(week.children[days].innerHTML);
+  // }
+
+  // Ṣtyling childrens through parent i.e week and days respectively
+  // week.children[2].style.backgroundColor = "blue";
+  // week.children[1].style.backgroundColor = "yellow";
+  // week.children[0].style.backgroundColor = "red";
+
+  // SOME PROPERTIES TO ACCESS CHILDRENs
+  // console.log(week.firstElementChild);
+  // console.log(week.lastElementChild);
+
+  // Accessing Parent and Sibling elements 
+
+  const accParent = document.querySelector(".days");
+  // console.log(accParent);
+  // console.log(accParent.parentElement);
+  // console.log(accParent.nextElementSibling);
+  // console.log(accParent.previousElementSibling); // null in this as we have selected first child only'
+  
+  // console.log(week.childNodes);
+  // op: NodeList(15) [text, div.days, text, div.days, text, div.days, text, div.days, text, div.days, text, div.days, text, div.days, text]0: text1: div.days2: text3: div.days4: text5: div.days6: text7: div.days8: text9: div.days10: text11: div.days12: text13: div.days14: textlength: 15[[Prototype]]: NodeList
+ 
+// Contains All Node Types:
+//  Element nodes (e.g., <div>)
+//  Text nodes (e.g., whitespace or text content)
+//  Comment nodes (e.g., <!-- Comment -->)
+ 
+// Live Collection:The NodeList returned by childNodes is live, meaning it automatically updates if the DOM changes.
+
+// Access By Index:Similar to an array, you can access child nodes using zero-based indexing.
+
+// Not an Array:It looks like an array but doesn’t inherit from Array. 
+// Methods like .map() and .filter() are not directly available.
+
+</script>
+
+</html>

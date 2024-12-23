@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      background-color: black;
+      color: white;
+      font-size: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  
+</body style="background-color: black; color: white;">
+<script>
+  // Creatiing new elements adding text nodes and appending it to the body
+  const div = document.createElement("div");
+  div.className = "newDiv";
+  div.id = "newId";
+  // OR
+  // div.id = Math.round(Math.random() * 10 + 1  );
+  div.style.backgroundColor = "green";
+  div.style.padding = "10px";
+  // now setting attributes using some methods
+  // div.setAttribute("data-attr", "some value"); syntax for setAttribute
+  // div.setAttribute("title", "some value");  // this method directly sets the value
+  // div.innerText = "learning DOM"; // this method brings previous values and then overwrites them making it a konger two step process .
+  const addText = document.createTextNode("learning DOM"); // here we create a text node saved in a variable and then append it to the element.
+  div.appendChild(addText);
+
+  // now we have created an element but we cannot see it on the webpage that is bcoz the element is in the memory and not on page to attach the element to page we have to attach it to document and body
+  document.body.appendChild(div);
+  console.log(div);
+  
+</script>
+</html>
