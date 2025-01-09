@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS-EVENTS</title>
+  <style>
+    body {
+      background-color: #000;
+      color: aliceblue;
+      display: flex;
+      justify-content: center;
+    }
+
+    li {
+      font-size: 25px;
+      font-family: cursive;
+    }
+  </style>
+</head>
+
+<body>
+  <ul id="ul">
+    <li id="li-1">Item 1</li>
+    <li id="li-2">Item 2</li>
+    <li id="li-3">Item 3</li><!--onclick="alert('item-3')" this method is not recommended as it poses scaling issues-->
+    <li id="li-4">Item 4</li>
+    <li id="li-5"><a href="https://www.google.com/">Google</a></li>
+  </ul>
+
+  <script>
+    // Earkier Approaches
+    // attachEvent() when internet was used to run applications
+    // jQuery - .on  this was used in jQuery framework
+
+    // document.getElementById('li-3').onclick = function () {
+    //   alert('item-3 clicked');
+    // }
+    //cons of using the above approach
+    /*
+    1.Overwriting Existing Handlers
+    If multiple onclick handlers are assigned to the same element using this method, the latest assignment 
+    overwrites any previously defined handlers.
+    2.Inline Tight Coupling
+    This approach tightly couples JavaScript functionality to specific DOM elements by their id. 
+    It lacks flexibility and can make the code harder to maintain if the HTML structure changes.
+    3. Limited Event Management
+    Directly assigning event handlers doesn't allow for advanced event management, 
+    like adding multiple listeners to the same event or removing specific handlers without removing all.
+    4. Lack of Event Delegation
+    It doesn't leverage event delegation, which is a more efficient way to handle events, 
+    especially for dynamically added elements. For example, attaching the event listener to a parent 
+    element is often better in scenarios with many similar child elements.
+    5. Global Namespace Pollution
+    If you rely on onclick assignments widely, you risk polluting the global namespace with numerous 
+    individual assignments instead of centralizing event management.
+    */
+
+    // Current BEST APPROACH
+    // Syntax: document.addEventListener(event, function, Capture)
+    /*
+    event	Required.
+    The event name.
+    Do not use the "on" prefix.
+    Use "click" instead of "onclick".
+    
+    All HTML DOM events are listed in the:
+    HTML DOM Event Object Reference.
+    function	Required.
+    The function to run when the event occurs.
+    When the event occurs, an event object is passed to the function as the first parameter. 
+    The type of the event object depends on the specified event. For example, the "click" event belongs to the MouseEvent object.
+    
+    capture	Optional (default = false).
+    true - The handler is executed in the capturing phase.
+    false - The handler is executed in the bubbling phase.
+    
+    Return Value
+    NONE*/
+    //  Recommended Alternative
+    // Use addEventListener, which provides more flexibility and avoids the issues above:
+    // document.getElementById('li-3').addEventListener('click', function () {
+    //   alert('item-3 clicked');
+    // });
+    // This approach allows multiple listeners, better event delegation, and cleaner, more maintainable code.
+
+    /*Event Propagation determines in which order the elements receive the event. There are two ways to handle this event propagation order of
+    HTML DOM is Event Bubbling and Event Capturing.
+    
+    For example, suppose there are three components namely component1, component2, component3. Inside these components,
+    we attached the onClickEventListener event handlers. Now when we click on component3 the event handler for all the three
+    components will be executed. Now here the question is in which order the event will execute.
+    Now at this point event bubbling and capturing comes into the picture.
+    
+    Bubbling:
+    When an event happens on a component, it first runs the event handler on it, then on its parent component,
+    then all the way up on other ancestors’ components. By default, all event handles through this order from
+    center component event to outermost component event.
+    
+    Example: In this example, we will create three div components and each component will have an event handler.
+    When we click on component 3, it will give an alert as “component 3 event clicked” then all the way up “component 2 event clicked”
+    and “component 1 event clicked” alerts will display. This is how event bubbling happens from the “bottom to top”.
+    */
+
+    /*PHASES OF EVENTS: There are three different phases during the lifecycle of a JavaScript event.
+    
+    Capturing Phase
+    Target Phase
+    Bubbling Phase
+    They follow the same order as listed above.
+    
+    Capturing Phase is when the event goes down to the element. The target phase is when the event reaches the
+    element and the Bubbling phase is when the event bubbles up from the element.*/
+    document.getElementById('ul').addEventListener('click', function (e) {
+      // console.log('ul clicked');
+    }, false)
+    document.getElementById('li-3').addEventListener('click', function (e) {
+      // console.log('item-3 clicked ');
+      // Stop event propagation to prevent bubbling up to the root
+      // e.stopPropagation();
+      // op: item-3 clicked
+    }, false)
+    // op: item-3 clicked 
+    //     ul clicked
+    // here the capture parameter is set to false i.e. The handler is executed in the bubbling phase which means components will be executed in 
+    // "BOTTOM-to-TOP" manner.
+
+    // EVENT CAPTURING
+    document.getElementById('ul').addEventListener('click', function (e) {
+      // console.log('ul clicked');
+
+    }, true)
+    document.getElementById('li-3').addEventListener('click', function (e) {
+      // console.log('item-3 clicked ');
+    }, true)
+
+    /*op: ul clicked
+          item-3 clicked */
+
+
+    /*
+    EVENT OBJECT
+    When an event occurs, an event object is automatically passed to the handler.
+    
+    Properties:
+    Property	Description
+    type:Type of the event (e.g., click, keydown).
+    target:The element where the event occurred.
+    currentTarget:The element that the event listener is attached to.
+    bubbles:Indicates if the event bubbles up.
+    defaultPrevented:Indicates if the default action has been prevented.
+    key: Key pressed (keyboard events).
+    pageX/pageY: Mouse position relative to the page.
+
+
+    Methods:
+    Method	Description
+    preventDefault()	Prevents the default action of the event.
+    stopPropagation()	Stops the event from propagating further.
+    stopImmediatePropagation()	Stops the event and other listeners on the same element.
+*/
+    // some more properties of event object
+    // type, timestamp, defaultPrevented
+    // target, toElement, srcElement, currentTarget,
+    // clientX, clientY, screenX, screenY
+    // altkey, ctrlkey, shiftkey, keyCod
+    document.getElementById('li-5').addEventListener('click', function (e) {
+      // console.log('Google clicked'); 
+      // on clicking on google it'll redirect to google but we dont want that soo to prevent this we wll use 
+      e.preventDefault(); // now it wont redirect
+      // and if we also dont need the ul clicked message to pop so to stop that we can use stopPropagation().
+    })
+
+
+
+    // now using events to remove items by clicking them
+    // we can use removeChild() method to remove the item from the list
+    // but we need to get the parent of the item first
+    // and then we can use removeChild() method to remove the item from the list
+    document.querySelector('#ul').addEventListener('click', function (e) {
+      console.log(e.target);
+      // now removing 
+      let removeItem = e.target;
+      // removeItem.remove(); 
+      // OR
+      // now we can use removeChild() method to remove the item from the list
+      removeItem.parentNode.removeChild(removeItem)
+    }, false)
+    let li = document.getElementById('li-5');
+    li.addEventListener('click', function (e) {
+      console.log(e.target);
+      // now removing
+      let removeItem = e.target.parentNode;
+      removeItem.remove();
+    })
+
+
+    /*Best Practices
+    1.Use addEventListener over inline or direct onclick handlers.
+    2.Utilize event delegation for dynamic elements.
+    3.Avoid anonymous functions for easy removal of listeners.
+    4.Always clean up event listeners when elements are removed to prevent memory leaks.*/
+
+
+    const randomColor = function () {
+      const hex = '01234567899ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+       color += hex[Math.floor(Math.random() * 16)]  ;
+      }
+      return color;
+    }
+
+  </script>
+</body>
+
+</html>
